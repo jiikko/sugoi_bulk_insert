@@ -1,26 +1,12 @@
 require "sugoi_bulk_insert/version"
 
 module SugoiBulkInsert
-  class AroundQuoteIterator
-    include Enumerable
-
-    def initialize(collection)
-      @collection = collection
-    end
-
-    def each
-      for item in @collection do
-        yield "`#{item}`"
-      end
-    end
-  end
-
   def self.new(*args, &block)
     Builder.new(*args, &block)
   end
 
   class Builder
-    def initialize(table_name: "hoge", count: 1000)
+    def initialize(table_name: , count: 1000)
       @table_name = table_name
       @count = count
       @table_info = {}
@@ -42,21 +28,22 @@ module SugoiBulkInsert
     private
 
     def columns
-      AroundQuoteIterator.new(@table_info.keys).map(&:itself).join(',')
+      @table_info.keys.map { |x| "`#{x}`" }.join(',')
     end
 
     def values
       list = []
       @count.times do
-        value = AroundQuoteIterator.new(@table_info.values).map { |x|
-          case x
-          when Array
-            x.sample
-          when Range
-            Random.rand(x)
-          else
-            x
-          end
+        value = @table_info.values.map { |x|
+          y = case x
+              when Array
+                x.sample
+              when Range
+                Random.rand(x)
+              else
+                x
+              end
+          y.is_a?(Fixnum) ? y : "'#{y}'"
         }
         list << "(#{value.join(',')})"
       end
