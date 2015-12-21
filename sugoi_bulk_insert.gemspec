@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["n905i.1214@gmail.com"]
 
   spec.summary       = %q{generate bulk insert sql.}
-  spec.description   = %q{generate bulk insert without ActiveRecord.}
+  spec.description   = %q{generate bulk insert sql without ActiveRecord.}
   spec.homepage      = "https://github.com/jiikko/sugoi_bulk_insert"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
