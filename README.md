@@ -3,7 +3,6 @@
 ## Requirements
 
 * ruby 2.2.0 later
-* MySQL
 
 ## Installation
 
@@ -46,9 +45,9 @@ b = SugoiBulkInsert.new(table_name: "comments", count: 300) do |x|
   x.column :body, 'aaaa'
 end
 b.to_sql # => display insert sql
-b.fire # => insert!
+b.fire # => insert! if require "mysql2"
 ```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/sugoi_bulk_insert.
+Bug reports and pull requests are welcome on GitHub at https://github.com/jiikko/sugoi_bulk_insert.
